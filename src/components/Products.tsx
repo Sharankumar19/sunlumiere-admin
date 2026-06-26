@@ -1,26 +1,29 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Products() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(
-          "https://sanlumiere.in/api/products"
-        );
+        const res = await fetch("/api/products");
+        console.log(res, "res");
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch products");
+        }
 
         const data = await res.json();
+        console.log(data, "data");
 
         console.log(data);
 
-        setProducts(data.products || data);
-      } catch (error) {
-        console.error(
-          "Products fetch failed",
-          error
-        );
+        setProducts(data.products ?? data);
+      } catch (err) {
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -35,13 +38,9 @@ export default function Products() {
 
       <header className="flex flex-col gap-4 bg-white px-6 py-5 shadow md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-black">
-            Products Dashboard
-          </h1>
+          <h1 className="text-3xl font-bold text-black">Products Dashboard</h1>
 
-          <p className="mt-1 text-sm text-gray-500">
-            Manage all products
-          </p>
+          <p className="mt-1 text-sm text-gray-500">Manage all products</p>
         </div>
 
         <button className="rounded-xl bg-[#C9A84C] px-6 py-3 font-medium text-white transition hover:opacity-90">
@@ -63,9 +62,7 @@ export default function Products() {
 
       {!loading && products.length === 0 && (
         <div className="flex items-center justify-center py-20">
-          <div className="text-lg text-gray-500">
-            No products found
-          </div>
+          <div className="text-lg text-gray-500">No products found</div>
         </div>
       )}
 
@@ -82,10 +79,7 @@ export default function Products() {
 
               <div className="overflow-hidden">
                 <img
-                  src={
-                    product.images?.[0] ||
-                    "https://via.placeholder.com/300"
-                  }
+                  src={product.images?.[0] || "https://via.placeholder.com/300"}
                   alt={product.name}
                   className="h-64 w-full object-cover transition hover:scale-105"
                 />
@@ -106,11 +100,7 @@ export default function Products() {
 
                 <div className="mt-5 flex items-center justify-between">
                   <h3 className="text-2xl font-bold text-[#C9A84C]">
-                    ₹
-                    {product.variants?.[0]
-                      ?.price ||
-                      product.price ||
-                      0}
+                    ₹{product.variants?.[0]?.price || product.price || 0}
                   </h3>
 
                   <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
@@ -121,7 +111,10 @@ export default function Products() {
                 {/* Buttons */}
 
                 <div className="mt-5 flex gap-3">
-                  <button className="flex-1 rounded-xl bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800">
+                  <button
+                    onClick={() => navigate(`/products/edit/${product.id}`)}
+                    className="flex-1 rounded-xl bg-black px-4 py-2 text-sm font-medium text-white"
+                  >
                     Edit
                   </button>
 
