@@ -32,6 +32,34 @@ export default function Products() {
     fetchProducts();
   }, []);
 
+  const deleteProduct = async (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?",
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`/api/products/${id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Failed to delete product");
+        return;
+      }
+
+      setProducts((prev) => prev.filter((product) => product.id !== id));
+
+      alert("Product deleted successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
@@ -43,7 +71,10 @@ export default function Products() {
           <p className="mt-1 text-sm text-gray-500">Manage all products</p>
         </div>
 
-        <button className="rounded-xl bg-[#C9A84C] px-6 py-3 font-medium text-white transition hover:opacity-90">
+        <button
+          onClick={() => navigate("/products/add")}
+          className="rounded-xl bg-[#C9A84C] px-6 py-3 font-medium text-white transition hover:opacity-90"
+        >
           + Add Product
         </button>
       </header>
@@ -118,7 +149,10 @@ export default function Products() {
                     Edit
                   </button>
 
-                  <button className="flex-1 rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600">
+                  <button
+                    onClick={() => deleteProduct(product.id)}
+                    className="flex-1 rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
+                  >
                     Delete
                   </button>
                 </div>

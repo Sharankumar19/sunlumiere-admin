@@ -19,50 +19,39 @@ export default function EditProduct() {
 
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-4">
-
       {/* Name */}
       <input
         className="w-full border p-3 rounded"
         value={product.name}
-        onChange={(e) =>
-          setProduct({ ...product, name: e.target.value })
-        }
+        onChange={(e) => setProduct({ ...product, name: e.target.value })}
       />
 
       {/* Subtitle */}
       <input
         className="w-full border p-3 rounded"
         value={product.subtitle}
-        onChange={(e) =>
-          setProduct({ ...product, subtitle: e.target.value })
-        }
+        onChange={(e) => setProduct({ ...product, subtitle: e.target.value })}
       />
 
       {/* Category */}
       <input
         className="w-full border p-3 rounded"
         value={product.category}
-        onChange={(e) =>
-          setProduct({ ...product, category: e.target.value })
-        }
+        onChange={(e) => setProduct({ ...product, category: e.target.value })}
       />
 
       {/* Badge */}
       <input
         className="w-full border p-3 rounded"
         value={product.badge}
-        onChange={(e) =>
-          setProduct({ ...product, badge: e.target.value })
-        }
+        onChange={(e) => setProduct({ ...product, badge: e.target.value })}
       />
 
       {/* Rating */}
       <input
         className="w-full border p-3 rounded"
         value={product.rating}
-        onChange={(e) =>
-          setProduct({ ...product, rating: e.target.value })
-        }
+        onChange={(e) => setProduct({ ...product, rating: e.target.value })}
       />
 
       {/* Review Count */}
