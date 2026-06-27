@@ -36,10 +36,11 @@ export default function Admin() {
             </button>
           </Link>
 
+   <Link to="customer">
           <button className="w-full rounded px-4 py-3 text-left hover:bg-gray-800">
             Customers
           </button>
-
+</Link>
           <button className="w-full rounded px-4 py-3 text-left hover:bg-gray-800">
             Settings
           </button>
