@@ -10,7 +10,6 @@ export default function Products() {
     const fetchProducts = async () => {
       try {
         const res = await fetch("/api/products");
-        console.log(res, "res");
 
         if (!res.ok) {
           throw new Error("Failed to fetch products");
