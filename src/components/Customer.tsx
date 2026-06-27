@@ -34,7 +34,6 @@ interface Customer {
 
 export default function Customers() {
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<Customer | null>(null);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -86,7 +85,6 @@ useEffect(() => {
       console.error(err);
       setCustomers([]);
     } finally {
-      setLoading(false);
     }
   }
 
